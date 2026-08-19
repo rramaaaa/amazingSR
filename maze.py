@@ -58,18 +58,22 @@ class MazeGenerator:
         move = ""
 
         if next_step == "Top" or next_step == "N":
+            current_cell.Top = False
             current_cell = grid[current_cell.Row - 1][current_cell.Column]
             move = "N"
     
         if next_step == "Bottom" or next_step == "S":
+            current_cell.Bottom = False
             current_cell = grid[current_cell.Row + 1][current_cell.Column]
             move = "S"
 
         if next_step == "Left" or next_step == "W":
+            current_cell.Left = False
             current_cell = grid[current_cell.Row][current_cell.Column - 1]
             move = "W"
 
         if next_step == "Right" or next_step == "E":
+            current_cell.Right = False
             current_cell = grid[current_cell.Row][current_cell.Column + 1]
             move = "E"
 
@@ -85,16 +89,10 @@ class MazeGenerator:
                 cells.append(element)
     
         start_random_point = random.choice(cells) 
-    #visited.append(start_random_point)
-    #cells.remove(start_random_point)
-    #direction = random.choice(start_random_point.cell_direction)
-    #start_random_point.cell_direction.remove(direction)
         point = start_random_point
+        
         while cells:
-        #visited.append(point)
-        #cells.remove(point)
-        #direction = random.choice(point.cell_direction)
-        #point.cell_direction.remove(direction)
+       
             if point not in visited:
                 visited.append(point)
                 cells.remove(point)
@@ -128,4 +126,4 @@ class MazeGenerator:
         return moves
 
 obj = MazeGenerator()
-print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
+print(obj.Generate_Maze(obj.Create_Grid(16, 4)))
