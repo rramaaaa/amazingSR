@@ -11,6 +11,21 @@ class Cell:
         self.Column: int = column
         self.MaxRow: int = maxrow
         self.MaxColumn: int = maxcolumn
+        self.cell_direction: list[str] = self.Check_Directions()
+
+    def Check_Directions(self) -> list[str]:
+        directions: list[str] = ["Top", "Left", "Bottom", "Right"] 
+
+        if self.Column == 0:
+            directions.remove("Left")
+        if self.Row == 0:
+            directions.remove("Top")
+        if self.MaxRow == self.Row:
+            directions.remove("Bottom")
+        if self.MaxColumn == self.Column:
+            directions.remove("Right")
+        return directions
+
 
 def Create_Grid(rows: int, columns: int) -> list[list: Callable]:
     grid: list = list()
@@ -26,41 +41,39 @@ def Check_Directions(cell: Cell) -> list[str]:
     directions: list[str] = ["Top", "Left", "Bottom", "Right"]
 
     if cell.Column == 0:
-        cell.Left = False
         directions.remove("Left")
     if cell.Row == 0:
-        cell.Top = False
         directions.remove("Top")
     if cell.MaxRow == cell.Row:
-        cell.Bottom = False
         directions.remove("Bottom")
     if cell.MaxColumn == cell.Column:
-        cell.Right = False
         directions.remove("Right")
     return directions
 
 
 def forbackward(grid: list[list], current_cell: Cell, next_step: str):
-    if next_step == "Top" or next_step == "S":
+    move = ""
+
+    if next_step == "Top" or next_step == "N":
         current_cell = grid[current_cell.Row - 1][current_cell.Column]
         move = "N"
     
-    if next_step == "Bottom" or next_step == "N":
+    if next_step == "Bottom" or next_step == "S":
         current_cell = grid[current_cell.Row + 1][current_cell.Column]
         move = "S"
 
-    if next_step == "Left" or next_step == "E":
+    if next_step == "Left" or next_step == "W":
         current_cell = grid[current_cell.Row][current_cell.Column - 1]
         move = "W"
 
-    if next_step == "Right" or next_step == "W":
+    if next_step == "Right" or next_step == "E":
         current_cell = grid[current_cell.Row][current_cell.Column + 1]
         move = "E"
 
     return current_cell, move
 
 
-def perfect(grid: list[list]):
+def Generate_Maze(grid: list[list[Cell]]):
     cells = []
     moves = []
     visited = []
@@ -68,99 +81,47 @@ def perfect(grid: list[list]):
         for element in grid[row]:
             cells.append(element)
     
-    #print(cells)
-
-    random_row = random.choice(grid)
-    point = random.choice(random_row)
-    visited.append(point)
-    #cells.remove(point)
-    #directions = Check_Directions(point)
-    #next_direction = random.choice(directions)
-    
-    directions = Check_Directions(point)
-
+    start_random_point = random.choice(cells) 
+    #visited.append(start_random_point)
+    #cells.remove(start_random_point)
+    #direction = random.choice(start_random_point.cell_direction)
+    #start_random_point.cell_direction.remove(direction)
+    point = start_random_point
     while cells:
-        #directions = Check_Directions(point)
-        next_direction = random.choice(directions)
-        directions.remove(next_direction)
-        check_point, move = forbackward(grid, point, next_direction)
-        moves.append(move)
-
-        if len(directions) == 0:
-            #next_direction = random.choice(directions)
-            #directions.remove(next_direction)
-        #else:
-            back_direction = moves[-1]
-            check_point, _ = forbackward(grid, point, back_direction)
-            print(check_point)
-            moves.pop()
-
-            cells.remove(check_point)
-
-        if check_point not in visited:
+        #visited.append(point)
+        #cells.remove(point)
+        #direction = random.choice(point.cell_direction)
+        #point.cell_direction.remove(direction)
+        if point not in visited:
             visited.append(point)
             cells.remove(point)
-            point = check_point
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    '''
-    visited = []
-    random_row = random.choice(grid)
-    point = random.choice(random_row)
-    while cells:
-        directions = Check_Directions(point)
-        next_step = random.choice(directions)
-        directions.remove(next_step)
-
-        if len(directions) == 0:
-            cells.remove(point)
-            visited.append(point)
-            random_row = random.choice(grid)
-            point = random.choice(random_row)
-
-        if next_step == "Top" and grid[point.Row - 1][point.Column] not in visited:
-            cells.remove(point)
-            visited.append(point)
-            point = grid[point.Row - 1][point.Column]
-            moves.append("N")
-
-        elif next_step == "Bottom" and grid[point.Row + 1][point.Column] not in visited:
-            cells.remove(point)
-            visited.append(point)
-            point = grid[point.Row + 1][point.Column]
-            moves.append("S")
-
-        elif next_step == "Left" and grid[point.Row][point.Column - 1] not in visited:
-            cells.remove(point)
-            visited.append(point)
-            point = grid[point.Row][point.Column - 1]
-            moves.append("W")
-
-        elif next_step == "Right" and grid[point.Row][point.Column + 1] not in visited:
-            cells.remove(point)
-            visited.append(point)
-            point = grid[point.Row][point.Column + 1]
-            moves.append("E")
+            direction = random.choice(point.cell_direction)
+            point.cell_direction.remove(direction)
+            point, move = forbackward(grid, point, direction)
+            moves.append(move)
 
         else:
-            continue
-    return moves
-    '''
+            if len(point.cell_direction) != 0:
+                direction = random.choice(point.cell_direction)
+                point.cell_direction.remove(direction)
+                point, move = forbackward(grid, point, direction)
+                moves.append(move)
 
-print(perfect(Create_Grid(4, 4)))
+            else:
+                if moves[-1] == "N":
+                    next_direction = "S"
+            
+                elif moves[-1] == "S":
+                    next_direction = "N"
+                    
+                elif moves[-1] == "E": 
+                    next_direction = "W"
+                
+                else:
+                    next_direction = "E"
+
+                point, _ = forbackward(grid, point,next_direction)
+                moves.pop()
+    #return moves
+
+print(Generate_Maze(Create_Grid(4, 4)))
