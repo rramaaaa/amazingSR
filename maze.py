@@ -110,9 +110,9 @@ class MazeGenerator:
                     point, move = self.forbackward(grid, point, direction)
                     moves.append(move)
 
-                else:
+                if len(point.cell_direction) == 0:
                     if moves[-1] == "N":
-                        next_directionMazeGenerato = "S"
+                        next_direction = "S"
             
                     elif moves[-1] == "S":
                         next_direction = "N"
