@@ -129,10 +129,17 @@ class MazeGenerator:
                     moves.pop()
         return grid
 
+    
+    '''def Maze_Printer(self, grid: list[list[Cell]]):
+        for row in range(len(grid)):
+            for column in range(len(grid[row])):
+                print("█",end="")
+            print()'''
+
 
 #obj = MazeGenerator()
 #print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
 #obj = MazeGenerator()
-#grid = obj.Create_Grid(10, 10)
+#grid = obj.Create_Grid(16, 16)
 #obj.Generate_Maze(grid)
 #obj.Maze_Printer(grid)
