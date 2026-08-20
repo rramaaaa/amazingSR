@@ -60,25 +60,25 @@ class MazeGenerator:
         if next_step == "Top" or next_step == "N":
             current_cell.Top = False
             current_cell = grid[current_cell.Row - 1][current_cell.Column]
-            #current_cell.Bottom = False
+            current_cell.Bottom = False
             move = "N"
     
         if next_step == "Bottom" or next_step == "S":
             current_cell.Bottom = False
             current_cell = grid[current_cell.Row + 1][current_cell.Column]
-            #current_cell.Top = False
+            current_cell.Top = False
             move = "S"
 
         if next_step == "Left" or next_step == "W":
             current_cell.Left = False
             current_cell = grid[current_cell.Row][current_cell.Column - 1]
-            #current_cell.Right = False
+            current_cell.Right = False
             move = "W"
 
         if next_step == "Right" or next_step == "E":
             current_cell.Right = False
             current_cell = grid[current_cell.Row][current_cell.Column + 1]
-            #current_cell.Left = False
+            current_cell.Left = False
             move = "E"
 
         return current_cell, move
@@ -129,19 +129,10 @@ class MazeGenerator:
                     moves.pop()
         return grid
 
-    def Maze_Printer(self, grid: list[list[Cell]]):
-        for row in grid:
-            for column in grid[row]:
-                if column.Top:
-                    print("█", end="")
-
 
 #obj = MazeGenerator()
 #print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
-obj = MazeGenerator()
-
-grid = obj.Create_Grid(10, 10)
-
-obj.Generate_Maze(grid)
-
-obj.Maze_Printer(grid)
+#obj = MazeGenerator()
+#grid = obj.Create_Grid(10, 10)
+#obj.Generate_Maze(grid)
+#obj.Maze_Printer(grid)

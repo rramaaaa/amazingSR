@@ -9,7 +9,7 @@ def print_maze(cell: MazeGenerator.Cell):
         if row == 0:
             if cell.Top:
                 for column in range(column):
-                    cell_walls.append("*")
+                    cell_walls.append("█")
     return cell_walls
 
 so = MazeGenerator.Cell(5, 5, 6, 6)
