@@ -1,49 +1,74 @@
 from maze import MazeGenerator
 
-def Maze_Printer(grid: list[list[MazeGenerator.Cell]]) -> None:
 
-    PINK = "\033[95m"
-    RESET = "\033[0m"
+def Maze_Printer(grid: list[list["MazeGenerator.Cell"]]) -> None:
+
+    #PINK = "\033[95m"
+    #RESET = "\033[0m"
 
     rows = len(grid)
-    columns = len(grid[0])
+    cols = len(grid[0])
 
-    print(PINK + "┌" + RESET, end="")
+    def h_wall(i, j):
 
-    for cell in grid[0]:
-        print("────", end="")
+        if i == 0 or i == rows:
+            return True
+        return grid[i - 1][j].Bottom
 
-    print()
+    def v_wall(i, j):
 
-    for i in range(rows):
+        if j == 0 or j == cols:
+            return True
+        return grid[i][j - 1].Right
 
-        print("│", end="")
+    CORNERS = {
+        (False, False, False, False): " ",
+        (True,  False, False, False): "╵",
+        (False, True,  False, False): "╷",
+        (False, False, True,  False): "╴",
+        (False, False, False, True):  "╶",
+        (True,  True,  False, False): "│",
+        (False, False, True,  True):  "─",
+        (True,  False, True,  False): "┘",
+        (True,  False, False, True):  "└",
+        (False, True,  True,  False): "┐",
+        (False, True,  False, True):  "┌",
+        (True,  True,  True,  False): "┤",
+        (True,  True,  False, True):  "├",
+        (True,  False, True,  True):  "┴",
+        (False, True,  True,  True):  "┬",
+        (True,  True,  True,  True):  "┼",
+    }
 
-        for j in range(columns):
+    def corner_char(i, j):
+        up = v_wall(i - 1, j) if i > 0 else False
+        down = v_wall(i, j) if i < rows else False
+        left = h_wall(i, j - 1) if j > 0 else False
+        right = h_wall(i, j) if j < cols else False
+        return CORNERS[(up, down, left, right)]
 
-            cell = grid[i][j]
+    lines = []
 
-            print("   ", end="")
+    for i in range(rows + 1):
 
-            if cell.Right:
-                print("│", end="")
-            else:
-                print(" ", end="")
+        line = ""
+        for j in range(cols):
+            line += corner_char(i, j)
+            line += "───" if h_wall(i, j) else "   "
+        line += corner_char(i, cols)
+        lines.append(line)
 
-        print()
+        # Cell row (vertical walls + interior space)
+        if i < rows:
+            cell_line = ""
+            for j in range(cols):
+                cell_line += "│" if v_wall(i, j) else " "
+                cell_line += "   "
+            cell_line += "│" if v_wall(i, cols) else " "
+            lines.append(cell_line)
 
-        print("│", end="")
+    print("\n".join(lines))
 
-        for j in range(columns):
-
-            cell = grid[i][j]
-
-            if cell.Bottom:
-                print("────", end="")
-            else:
-                print("   │", end="")
-
-        print()
 
 obj = MazeGenerator()
 grid = obj.Create_Grid(20, 20)
