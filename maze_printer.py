@@ -1,32 +1,49 @@
 from maze import MazeGenerator
 
+def Maze_Printer(grid: list[list[MazeGenerator.Cell]]) -> None:
 
-def Create_block(grid: list[list[MazeGenerator.Cell]], row: int, column: int):
-    for i in range(8):
-        for j in range(8):
-            if grid[row][column].Top:
-                print(" ", end="")
-            elif grid[row][column].Bottom:
-                print(" ", end="")
-            elif grid[row][column].Left:
-                print(" ", end="")
-            elif grid[row][column].Right:
-                print(" ", end="")
+    PINK = "\033[95m"
+    RESET = "\033[0m"
+
+    rows = len(grid)
+    columns = len(grid[0])
+
+    print(PINK + "┌" + RESET, end="")
+
+    for cell in grid[0]:
+        print("────", end="")
+
+    print()
+
+    for i in range(rows):
+
+        print("│", end="")
+
+        for j in range(columns):
+
+            cell = grid[i][j]
+
+            print("   ", end="")
+
+            if cell.Right:
+                print("│", end="")
             else:
-                print("█",end="")
+                print(" ", end="")
+
         print()
-            
 
+        print("│", end="")
 
-def Maze_Printer(grid: list[list[MazeGenerator.Cell]]):
-    for row in range(len(grid)):
-        for column in range(len(grid[row])):
-            Create_block(grid, row, column)
+        for j in range(columns):
+
+            cell = grid[i][j]
+
+            if cell.Bottom:
+                print("────", end="")
+            else:
+                print("   │", end="")
+
         print()
-    #return cell_walls
-
-#so = MazeGenerator.Generate_Maze(MazeGenerator.Create_Grid(6, 6, 6))
-#print(print_maze(so))
 
 obj = MazeGenerator()
 grid = obj.Create_Grid(20, 20)
