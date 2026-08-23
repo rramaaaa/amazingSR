@@ -3,8 +3,6 @@ from maze import MazeGenerator
 
 def Maze_Printer(grid: list[list["MazeGenerator.Cell"]]) -> None:
 
-    #PINK = "\033[95m"
-    #RESET = "\033[0m"
 
     rows = len(grid)
     cols = len(grid[0])
@@ -58,7 +56,6 @@ def Maze_Printer(grid: list[list["MazeGenerator.Cell"]]) -> None:
         line += corner_char(i, cols)
         lines.append(line)
 
-        # Cell row (vertical walls + interior space)
         if i < rows:
             cell_line = ""
             for j in range(cols):
