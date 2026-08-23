@@ -141,26 +141,51 @@ class MazeGenerator:
 
     def Imperfect_Maze(self, grid: list[list[Cell]]) -> list[list[Cell]]:
         cells = []
+        visited = []
+        moves = []
         for row in range(len(grid)):
              for element in grid[row]:
                   cells.append(element)
             
         start_random_point = random.choice(cells) 
         point = start_random_point
-                
+        print(point)
+        directions = ["Top", "Bottom", "Right", "Left"]   
         while cells:
-            cells.remove(point)
-            direction = random.choice(point.cell_direction)
-            point.cell_direction.remove(direction)
-            
+
+
+            if point not in visited:
+                visited.append(point)
+                cells.remove(point)
+                direction = random.choice(point.cell_direction)
+                point.cell_direction.remove(direction)
+        
+                if self.backward(grid, point, direction) not in visited:
+                    point, move = self.forward(grid, point, direction)
+                    moves.append(move)
+        
+            else:
+                if len(point.cell_direction) != 0:
+                    direction = random.choice(point.cell_direction)
+                    point.cell_direction.remove(direction)
+        
+                    if self.backward(grid, point, direction) not in visited:
+                                #point.cell_direction.remove(direction)
+                        point, move = self.forward(grid, point, direction)
+                        moves.append(move)
+        
+                if len(point.cell_direction) == 0:
+                    next_direction = random.choice(directions)
+                    point = self.forward(grid, point, next_direction)
+                    moves.pop()
                             
         return grid
 
 
 
-#obj = MazeGenerator()
-#print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
-#obj = MazeGenerator()
-#grid = obj.Create_Grid(16, 16)
-#obj.Generate_Maze(grid)
+obj = MazeGenerator()
+print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
+obj = MazeGenerator()
+grid = obj.Create_Grid(16, 16)
+obj.Imperfect_Maze(grid)
 #obj.Maze_Printer(grid)
