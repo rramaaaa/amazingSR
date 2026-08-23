@@ -29,8 +29,8 @@ def to_hexa(nums: list[list[int]]):
 
 
 
-obj = MazeGenerator()
-grid = obj.Create_Grid(10, 10)
-out = obj.Generate_Maze(grid)
-res = output(out)
-to_hexa(res)
+#obj = MazeGenerator()
+#grid = obj.Create_Grid(10, 10)
+#out = obj.Generate_Maze(grid)
+#res = output(out)
+#to_hexa(res)

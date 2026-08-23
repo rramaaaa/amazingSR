@@ -1,26 +1,25 @@
-def Check_Corners(width: int, height: int, entry: tuple[int, int], exit: tuple[int, int]):
-    wi, hei = entry
-    if wi > width or wi < 0:
-        raise ValueError("entry point must be in the selected maze range!")
+def Check_Corners(width: int, height: int, entry_row: int, entry_column: int, exit_row: int, exit_column: int):
+    if entry_row < 0 or entry_row >= height:
+        raise ValueError("entry row is outside the maze!")
 
-    if hei > height or hei < 0:
-        raise ValueError("entry point must be in the selected maze range!")
+    if entry_column < 0 or entry_column >= width:
+        raise ValueError("entry column is outside the maze!")
 
-    wi, hei = exit
-    if wi > width or wi < 0:
-        raise ValueError("exit point must be in the selected maze range!")
+    if exit_row < 0 or exit_row >= height:
+        raise ValueError("exit row is outside the maze!")
 
-    if hei > height or hei < 0:
-        raise ValueError("exit point must be in the selected maze range!")
+    if exit_column < 0 or exit_column >= width:
+        raise ValueError("exit column is outside the maze!")
+    
 
-
-def read_config(file_name: str) -> dict[int]:
+def read_config(file_name: str) -> dict[str, str]:
     with open(file_name, 'r') as file:
         info = {}
         for line in file:
-            if line.startswith("#") or line == "":
+            if line.startswith("#") or line == "\n":
                 continue
             else:
+                line = line.strip()
                 key, value = line.split("=")
                 info[key] = value
     return info

@@ -86,7 +86,7 @@ class MazeGenerator:
         return current_cell, move
 
 
-    def Generate_Maze(self, grid: list[list[Cell]]):
+    def Generate_Maze(self, grid: list[list[Cell]]) -> list[list[Cell]]:
         cells = []
         moves = []
         visited = []
@@ -137,6 +137,25 @@ class MazeGenerator:
                     moves.pop()
                     
         return grid
+
+
+    def Imperfect_Maze(self, grid: list[list[Cell]]) -> list[list[Cell]]:
+        cells = []
+        for row in range(len(grid)):
+             for element in grid[row]:
+                  cells.append(element)
+            
+        start_random_point = random.choice(cells) 
+        point = start_random_point
+                
+        while cells:
+            cells.remove(point)
+            direction = random.choice(point.cell_direction)
+            point.cell_direction.remove(direction)
+            
+                            
+        return grid
+
 
 
 #obj = MazeGenerator()

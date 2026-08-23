@@ -67,7 +67,7 @@ def Maze_Printer(grid: list[list["MazeGenerator.Cell"]]) -> None:
     print("\n".join(lines))
 
 
-obj = MazeGenerator()
-grid = obj.Create_Grid(11, 20)
-obj.Generate_Maze(grid)
-Maze_Printer(grid)
+#obj = MazeGenerator()
+#grid = obj.Create_Grid(11, 20)
+#obj.Generate_Maze(grid)
+#Maze_Printer(grid)
