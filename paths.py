@@ -1,5 +1,3 @@
-
-
 def Check_Corners(width: int, height: int, entry: tuple[int, int], exit: tuple[int, int]):
     wi, hei = entry
     if wi > width or wi < 0:

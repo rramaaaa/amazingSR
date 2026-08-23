@@ -2,7 +2,6 @@ from collections.abc import Callable
 import random
 
 
-
 class MazeGenerator:
     class Cell:
         def __init__(self, row: int, column: int, maxrow: int, maxcolumn: int) -> None:

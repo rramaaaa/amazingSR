@@ -1,5 +1,6 @@
 from maze import MazeGenerator
 
+
 def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
     result = []
     for row in grid:

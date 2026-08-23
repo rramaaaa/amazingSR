@@ -68,6 +68,6 @@ def Maze_Printer(grid: list[list["MazeGenerator.Cell"]]) -> None:
 
 
 obj = MazeGenerator()
-grid = obj.Create_Grid(10, 20)
+grid = obj.Create_Grid(11, 20)
 obj.Generate_Maze(grid)
 Maze_Printer(grid)
