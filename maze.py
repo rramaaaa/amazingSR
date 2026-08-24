@@ -30,14 +30,14 @@ class MazeGenerator:
 
 
     def Create_Grid(self, rows: int, columns: int) -> list[list[Cell]]:
-        grid: list = list()
+        self.grid: list = list()
         for i in range(rows):
             cell: list = []
-            grid.append(cell)
+            self.grid.append(cell)
             for j in range(columns):
                 cell.append(self.Cell(i, j, rows - 1, columns - 1))
                 #print(grid[i][j].Row, grid[i][j].Column)
-        return grid
+        return self.grid
 
 
     def backward(self, grid: list[list], current_cell: Cell, next_step: str) -> Cell:
@@ -86,17 +86,19 @@ class MazeGenerator:
         return current_cell, move
 
 
-    def Generate_Maze(self, grid: list[list[Cell]]) -> list[list[Cell]]:
+    def Generate_Maze(self, grid: list[list[Cell]], perfect: str) -> list[list[Cell]]:
         cells = []
         moves = []
         visited = []
         for row in range(len(grid)):
             for element in grid[row]:
                 cells.append(element)
+
+        total_cells = len(cells)
     
         start_random_point = random.choice(cells) 
         point = start_random_point
-        
+
         while cells:
        
             if point not in visited:
@@ -106,7 +108,6 @@ class MazeGenerator:
                 point.cell_direction.remove(direction)
 
                 if self.backward(grid, point, direction) not in visited:
-                    #point.cell_direction.remove(direction)
                     point, move = self.forward(grid, point, direction)
                     moves.append(move)
 
@@ -116,7 +117,6 @@ class MazeGenerator:
                     point.cell_direction.remove(direction)
 
                     if self.backward(grid, point, direction) not in visited:
-                        #point.cell_direction.remove(direction)
                         point, move = self.forward(grid, point, direction)
                         moves.append(move)
 
@@ -135,56 +135,41 @@ class MazeGenerator:
 
                     point = self.backward(grid, point,next_direction)
                     moves.pop()
-                    
+        if perfect == "True":
+            return grid
+
+        for i in range(len(grid)*2):
+            random_row = random.choice(grid)
+            random_cell = random.choice(random_row)
+            if random_cell.cell_direction:
+                random_wall = random.choice(random_cell.cell_direction)
+                if random_wall == "Top":
+                    random_cell.Top = False
+                    random_cell.cell_direction.remove("Top")
+                    grid[random_cell.Row - 1][random_cell.Column].Bottom = False
+
+                if random_wall == "Bottom":
+                    random_cell.Bottom = False
+                    random_cell.cell_direction.remove("Bottom")
+                    grid[random_cell.Row + 1][random_cell.Column].Top = False
+
+                if random_wall == "Left":
+                    random_cell.Left = False
+                    random_cell.cell_direction.remove("Left")
+                    grid[random_cell.Row][random_cell.Column - 1].Right = False
+
+                if random_wall == "Right":
+                    random_cell.Right = False
+                    random_cell.cell_direction.remove("Right")
+                    grid[random_cell.Row][random_cell.Column + 1].Left = False
+
         return grid
-
-
-    def Imperfect_Maze(self, grid: list[list[Cell]]) -> list[list[Cell]]:
-        cells = []
-        visited = []
-        moves = []
-        for row in range(len(grid)):
-             for element in grid[row]:
-                  cells.append(element)
-            
-        start_random_point = random.choice(cells) 
-        point = start_random_point
-        print(point)
-        directions = ["Top", "Bottom", "Right", "Left"]   
-        while cells:
-
-
-            if point not in visited:
-                visited.append(point)
-                cells.remove(point)
-                direction = random.choice(point.cell_direction)
-                point.cell_direction.remove(direction)
-        
-                if self.backward(grid, point, direction) not in visited:
-                    point, move = self.forward(grid, point, direction)
-                    moves.append(move)
-        
-            else:
-                if len(point.cell_direction) != 0:
-                    direction = random.choice(point.cell_direction)
-                    point.cell_direction.remove(direction)
-        
-                    if self.backward(grid, point, direction) not in visited:
-                                #point.cell_direction.remove(direction)
-                        point, move = self.forward(grid, point, direction)
-                        moves.append(move)
-        
-                if len(point.cell_direction) == 0:
-                    next_direction = random.choice(directions)
-                    point = self.forward(grid, point, next_direction)
-                            
-        return grid
-
 
 
 #obj = MazeGenerator()
 #print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
 #obj = MazeGenerator()
 #grid = obj.Create_Grid(16, 16)
-#obj.Imperfect_Maze(grid)
+#grid = obj.Generate_Maze(grid, "False")
+#Maze_Printer(grid)
 #obj.Maze_Printer(grid)

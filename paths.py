@@ -1,4 +1,4 @@
-def Check_Corners(width: int, height: int, entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
+def Check_Corners(height: int, width: int, entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
     if entry_row < 0 or entry_row >= height:
         raise ValueError("entry row is outside the maze!")
 
