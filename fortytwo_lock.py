@@ -35,14 +35,23 @@ def FortyTwo(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int) -> l
 
 
     grid[i - 1][j - 3].Top = True
+    grid[i - 2][j - 3].Bottom = True
     grid[i - 1][j - 3].Bottom = True
+    grid[i][j - 3].Top = True
     grid[i - 1][j - 3].Right = True
+    grid[i - 1][j - 2].Left = True
     grid[i - 1][j - 3].Left = True
+    grid[i - 1][j - 4].Right = True
 
     grid[i - 2][j - 3].Top = True
+    grid[i - 3][j - 3].Bottom = True
     grid[i - 2][j - 3].Bottom = True
+    grid[i - 1][j - 3].Top = True
     grid[i - 2][j - 3].Left = True
-    grid[i - 2][j - 3].Right = True 
+    grid[i - 2][j - 4].Right = True
+    grid[i - 2][j - 3].Right = True
+    grid[i - 2][j - 2].Left = True
+
 
     grid[i + 1][j -1].Top = True
     grid[i + 1][j -1].Bottom = True
