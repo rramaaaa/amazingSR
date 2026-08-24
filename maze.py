@@ -9,6 +9,7 @@ class MazeGenerator:
             self.Bottom: bool = True
             self.Right: bool = True
             self.Left: bool = True
+            self.Lock: bool = False
             self.Row: int = row
             self.Column: int = column
             self.MaxRow: int = maxrow
@@ -86,28 +87,69 @@ class MazeGenerator:
         return current_cell, move
 
 
+    def remove_walls(self) -> list[list[Cell]]:
+        for i in range(len(self.grid)*2):
+            random_row = random.choice(self.grid)
+            random_cell = random.choice(random_row)
+            if random_cell.cell_direction:
+                random_wall = random.choice(random_cell.cell_direction)
+                if random_wall == "Top":
+                    random_cell.Top = False
+                    random_cell.cell_direction.remove("Top")
+                    self.grid[random_cell.Row - 1][random_cell.Column].Bottom = False
+        
+                if random_wall == "Bottom":
+                    random_cell.Bottom = False
+                    random_cell.cell_direction.remove("Bottom")
+                    self.grid[random_cell.Row + 1][random_cell.Column].Top = False
+        
+                if random_wall == "Left":
+                    random_cell.Left = False
+                    random_cell.cell_direction.remove("Left")
+                    self.grid[random_cell.Row][random_cell.Column - 1].Right = False
+        
+                if random_wall == "Right":
+                    random_cell.Right = False
+                    random_cell.cell_direction.remove("Right")
+                    self.grid[random_cell.Row][random_cell.Column + 1].Left = False
+
+        return self.grid
+
+
     def Generate_Maze(self, grid: list[list[Cell]], perfect: str) -> list[list[Cell]]:
         cells = []
         moves = []
         visited = []
         for row in range(len(grid)):
             for element in grid[row]:
-                cells.append(element)
+                if not element.Lock: 
+                    cells.append(element)
 
-        total_cells = len(cells)
-    
-        start_random_point = random.choice(cells) 
-        point = start_random_point
+
+        #start_random_point = random.choice(cells) 
+        #point = start_random_point
+        point = grid[0][0]
+
+        #if point.Lock:
+        #    cells.remove(point)
+        #    point = random.choice(cells)
 
         while cells:
-       
+            
             if point not in visited:
+
                 visited.append(point)
                 cells.remove(point)
+
+                if not point.cell_direction:
+                    continue
+
                 direction = random.choice(point.cell_direction)
                 point.cell_direction.remove(direction)
 
-                if self.backward(grid, point, direction) not in visited:
+                next_point = self.backward(grid, point, direction)
+
+                if next_point not in visited and not next_point.Lock:
                     point, move = self.forward(grid, point, direction)
                     moves.append(move)
 
@@ -116,60 +158,41 @@ class MazeGenerator:
                     direction = random.choice(point.cell_direction)
                     point.cell_direction.remove(direction)
 
-                    if self.backward(grid, point, direction) not in visited:
+                    next_point = self.backward(grid, point, direction)
+
+                    if next_point not in visited and not next_point.Lock:
                         point, move = self.forward(grid, point, direction)
                         moves.append(move)
 
-                if len(point.cell_direction) == 0:
-                    if moves[-1] == "N":
-                        next_direction = "S"
+                else:
+                    if len(point.cell_direction) == 0:
+                        if moves[-1] == "N":
+                            next_direction = "S"
             
-                    elif moves[-1] == "S":
-                        next_direction = "N"
+                        elif moves[-1] == "S":
+                            next_direction = "N"
                     
-                    elif moves[-1] == "E": 
-                        next_direction = "W"
+                        elif moves[-1] == "E": 
+                            next_direction = "W"
                 
-                    else:
-                        next_direction = "E"
+                        else:
+                            next_direction = "E"
 
-                    point = self.backward(grid, point,next_direction)
-                    moves.pop()
+                        point = self.backward(grid, point,next_direction)
+                        moves.pop()
+
         if perfect == "True":
             return grid
 
-        for i in range(len(grid)*2):
-            random_row = random.choice(grid)
-            random_cell = random.choice(random_row)
-            if random_cell.cell_direction:
-                random_wall = random.choice(random_cell.cell_direction)
-                if random_wall == "Top":
-                    random_cell.Top = False
-                    random_cell.cell_direction.remove("Top")
-                    grid[random_cell.Row - 1][random_cell.Column].Bottom = False
-
-                if random_wall == "Bottom":
-                    random_cell.Bottom = False
-                    random_cell.cell_direction.remove("Bottom")
-                    grid[random_cell.Row + 1][random_cell.Column].Top = False
-
-                if random_wall == "Left":
-                    random_cell.Left = False
-                    random_cell.cell_direction.remove("Left")
-                    grid[random_cell.Row][random_cell.Column - 1].Right = False
-
-                if random_wall == "Right":
-                    random_cell.Right = False
-                    random_cell.cell_direction.remove("Right")
-                    grid[random_cell.Row][random_cell.Column + 1].Left = False
+        grid = self.remove_walls()
 
         return grid
 
 
 #obj = MazeGenerator()
 #print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
-#obj = MazeGenerator()
-#grid = obj.Create_Grid(16, 16)
-#grid = obj.Generate_Maze(grid, "False")
+obj = MazeGenerator()
+grid = obj.Create_Grid(16, 16)
+grid = obj.Generate_Maze(grid, "False")
 #Maze_Printer(grid)
 #obj.Maze_Printer(grid)

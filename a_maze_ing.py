@@ -2,7 +2,7 @@ import sys
 from paths import read_config, Check_Corners
 from maze import MazeGenerator
 from maze_printer import Maze_Printer
-from fortytwo_lock import FortyTwo
+from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
 
 try:
     file_name = sys.argv[1]
@@ -15,9 +15,11 @@ try:
     Check_Corners(rows, columns, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
     obj = MazeGenerator()
     grid = obj.Create_Grid(rows, columns)
+    grid = FortyTwo_Lock(grid, rows, columns)
     grid = obj.Generate_Maze(grid, perfect)
+    grid = FortyTwo_Check(grid, rows, columns)
     #obj.Imperfect_Maze(grid)
-    grid = FortyTwo(grid, rows, columns)
+    #grid = FortyTwo(grid, rows, columns)
     Maze_Printer(grid)
 
 except Exception as e:
