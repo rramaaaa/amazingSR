@@ -177,15 +177,14 @@ class MazeGenerator:
                 if len(point.cell_direction) == 0:
                     next_direction = random.choice(directions)
                     point = self.forward(grid, point, next_direction)
-                    moves.pop()
                             
         return grid
 
 
 
-obj = MazeGenerator()
-print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
-obj = MazeGenerator()
-grid = obj.Create_Grid(16, 16)
-obj.Imperfect_Maze(grid)
+#obj = MazeGenerator()
+#print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
+#obj = MazeGenerator()
+#grid = obj.Create_Grid(16, 16)
+#obj.Imperfect_Maze(grid)
 #obj.Maze_Printer(grid)

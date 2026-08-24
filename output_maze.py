@@ -21,7 +21,7 @@ def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
     return result
 
 
-def to_hexa(nums: list[list[int]]):
+def to_hexa(nums: list[list[int]]) -> None:
     for lst in nums:
         for num in lst:
             print(hex(num)[2:], end="")
