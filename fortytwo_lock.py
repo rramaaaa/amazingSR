@@ -20,19 +20,14 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i - 1][j - 2].Bottom = True
     grid[i][j - 2].Bottom = True
     grid[i + 1][j - 2].Top = True
-    #grid[i][j - 2].Right = True
     grid[i][j - 3].Left = True
     grid[i][j - 2].Left = True
-   #grid[i][j - 1].Right = True
 
 
     grid[i][j - 3].Top = True
     grid[i - 1][j - 3].Bottom = True
     grid[i][j - 3].Bottom = True
     grid[i - 1][j - 3].Top = True
-    #grid[i][j - 3].Right = True
-    #grid[i][j - 2].Left = True
-    #grid[i][j - 3].Left = True
     grid[i][j - 4].Right = True
 
 
@@ -49,8 +44,6 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     
     grid[i - 2][j - 3].Top = True
     grid[i - 3][j - 3].Bottom = True
-    #grid[i - 2][j - 3].Bottom = True
-    #grid[i - 1][j - 3].Top = True
     grid[i - 2][j - 3].Left = True
     grid[i - 2][j - 4].Right = True
     grid[i - 2][j - 3].Right = True
@@ -67,8 +60,6 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i + 1][j - 2].Right = True
 
 
-    #grid[i + 2][j - 1].Top = True
-    #grid[i + 1][j - 1].Bottom = True  
     grid[i + 2][j - 1].Bottom = True
     grid[i + 3][j - 1].Top = True
     grid[i + 2][j - 1].Left = True
@@ -93,24 +84,18 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i + 1][j + 2].Top = True 
     grid[i][j + 2].Right = True 
     grid[i][j + 3].Left = True
-    #grid[i][j + 2].Left = True
-    #grid[i][j + 1].Right = True
 
 
     grid[i][j + 3].Top = True
     grid[i - 1][j + 3].Bottom = True
     grid[i][j + 3].Bottom = True
     grid[i + 1][j + 3].Top = True
-    #grid[i][j + 3].Left = True
-    #grid[i][j + 2].Right = True
     grid[i][j + 3].Right = True
     grid[i][j + 4].Left = True
 
 
     grid[i - 1][j + 3].Top = True
     grid[i - 2][j + 3].Bottom = True
-    #grid[i - 1][j + 3].Bottom = True
-    #grid[i][j + 3].Top = True
     grid[i - 1][j + 3].Right = True
     grid[i - 1][j + 4].Left = True
     grid[i - 1][j + 3].Left = True
@@ -119,7 +104,6 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
 
     grid[i - 2][j + 3].Top = True
     grid[i - 3][j + 3].Bottom = True
-    #grid[i - 2][j + 3].Bottom = True
     grid[i - 1][j + 3].Top = True
     grid[i - 2][j + 3].Left = True
     grid[i - 2][j + 2].Right = True
@@ -133,16 +117,12 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i - 1][j + 2].Top = True
     grid[i - 2][j + 2].Left = True
     grid[i - 2][j + 1].Right = True
-    #grid[i - 2][j + 2].Right = True
-    #grid[i - 2][j + 3].Left = True
 
 
     grid[i - 2][j + 1].Top = True
     grid[i - 3][j + 1].Bottom = True
     grid[i - 2][j + 1].Bottom = True
     grid[i - 1][j + 1].Top = True
-    #grid[i - 2][j + 1].Right = True
-    #grid[i - 2][j + 2].Left = True 
     grid[i - 2][j + 1].Left = True
     grid[i - 2][j].Right = True
 
@@ -157,8 +137,6 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i + 1][j].Right = True
 
 
-    #grid[i + 2][j + 1].Top = True
-    #grid[i + 1][j + 1].Bottom = True
     grid[i + 2][j + 1].Bottom = True
     grid[i + 3][j + 1].Top = True
     grid[i + 2][j + 1].Right = True
@@ -173,16 +151,13 @@ def FortyTwo_Check(grid: list[list[MazeGenerator.Cell]], rows: int, columns: int
     grid[i + 3][j + 2].Top = True
     grid[i + 2][j + 2].Right = True
     grid[i + 2][j + 3].Left = True
-    #grid[i + 2][j + 2].Left = True
-    grid[i + 1][j + 2].Right = True
+    grid[i + 2][j + 1].Right = True
 
 
     grid[i + 2][j + 3].Top = True
     grid[i + 1][j + 3].Bottom = True
     grid[i + 2][j + 3].Bottom = True
     grid[i + 3][j + 3].Top = True
-    #grid[i + 2][j + 3].Left = True
-    #grid[i + 2][j + 2].Right = True
     grid[i + 2][j + 3].Right = True
     grid[i + 2][j + 4].Left = True
 

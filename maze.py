@@ -191,8 +191,8 @@ class MazeGenerator:
 
 #obj = MazeGenerator()
 #print(obj.Generate_Maze(obj.Create_Grid(4, 4)))
-obj = MazeGenerator()
-grid = obj.Create_Grid(16, 16)
-grid = obj.Generate_Maze(grid, "False")
+#obj = MazeGenerator()
+#grid = obj.Create_Grid(16, 16)
+#grid = obj.Generate_Maze(grid, "False")
 #Maze_Printer(grid)
 #obj.Maze_Printer(grid)
