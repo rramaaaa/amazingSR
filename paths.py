@@ -1,3 +1,6 @@
+from maze import MazeGenerator
+
+
 def Check_Corners(height: int, width: int, entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
     if entry_row < 0 or entry_row >= height:
         raise ValueError("entry row is outside the maze!")
@@ -10,6 +13,17 @@ def Check_Corners(height: int, width: int, entry_row: int, entry_column: int, ex
 
     if exit_column < 0 or exit_column >= width:
         raise ValueError("exit column is outside the maze!")
+
+    if entry_row == exit_row and exit_column == exit_column:
+        raise ValueError("entry and exit point can't be the same!")
+
+
+def Ckech_not_in_lock(grid: list[list[MazeGenerator.Cell]], entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
+    if grid[entry_row][entry_column].Lock:
+        raise ValueError("The entry point is placed on the locked 42 point")
+
+    if grid[exit_row][exit_column].Lock:
+        raise ValueError("The exit point is placed on the locked 42 point")
     
 
 def read_config(file_name: str) -> dict[str, str]:
@@ -20,7 +34,10 @@ def read_config(file_name: str) -> dict[str, str]:
                 continue
             else:
                 line = line.strip()
-                key, value = line.split("=")
+                parts = line.split("=")
+                if len(parts) != 2:
+                    raise ValueError("please enter a correct format! '(KEY=VAlUE)'")
+                key, value = parts
                 info[key] = value
 
         if "WIDTH" not in info:
@@ -40,6 +57,7 @@ def read_config(file_name: str) -> dict[str, str]:
 
         if "PERFECT" not in info:
             raise KeyError("Config file must have a PERFECT status")
+        
     return info
 
 #print(read_config("config.txt"))

@@ -1,5 +1,5 @@
 import sys
-from paths import read_config, Check_Corners
+from paths import read_config, Check_Corners, Ckech_not_in_lock
 from maze import MazeGenerator
 from maze_printer import Maze_Printer
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
@@ -16,9 +16,9 @@ try:
     obj = MazeGenerator()
     grid = obj.Create_Grid(rows, columns)
     grid = FortyTwo_Lock(grid, rows, columns)
+    Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
     grid = obj.Generate_Maze(grid, perfect)
     grid = FortyTwo_Check(grid, rows, columns)
-    #obj.Imperfect_Maze(grid)
     #grid = FortyTwo(grid, rows, columns)
     Maze_Printer(grid)
 

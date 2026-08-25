@@ -12,20 +12,18 @@ class MazeGenerator:
             self.Lock: bool = False
             self.Row: int = row
             self.Column: int = column
-            self.MaxRow: int = maxrow
-            self.MaxColumn: int = maxcolumn
-            self.cell_direction: list[str] = self.Check_Directions()
+            self.cell_direction: list[str] = self.Check_Directions(maxrow, maxcolumn)
 
-        def Check_Directions(self) -> list[str]:
+        def Check_Directions(self, maxrow: int, maxcolumn: int) -> list[str]:
             directions: list[str] = ["Top", "Left", "Bottom", "Right"] 
 
             if self.Column == 0:
                 directions.remove("Left")
             if self.Row == 0:
                 directions.remove("Top")
-            if self.MaxRow == self.Row:
+            if maxrow == self.Row:
                 directions.remove("Bottom")
-            if self.MaxColumn == self.Column:
+            if maxcolumn == self.Column:
                 directions.remove("Right")
             return directions
 
@@ -126,13 +124,8 @@ class MazeGenerator:
                     cells.append(element)
 
 
-        #start_random_point = random.choice(cells) 
-        #point = start_random_point
-        point = grid[0][0]
-
-        #if point.Lock:
-        #    cells.remove(point)
-        #    point = random.choice(cells)
+        start_random_point = random.choice(cells) 
+        point = start_random_point
 
         while cells:
             
