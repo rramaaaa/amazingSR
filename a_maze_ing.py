@@ -3,6 +3,7 @@ from paths import read_config, Check_Corners, Ckech_not_in_lock
 from maze import MazeGenerator
 from maze_printer import Maze_Printer
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
+from maze_analyzer import to_hexa, output
 
 try:
     file_name = sys.argv[1]
@@ -19,6 +20,8 @@ try:
     Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
     grid = obj.Generate_Maze(grid, perfect)
     grid = FortyTwo_Check(grid, rows, columns)
+    #res = output(grid)
+    #to_hexa(res, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
     #grid = FortyTwo(grid, rows, columns)
     Maze_Printer(grid)
 

@@ -21,11 +21,16 @@ def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
     return result
 
 
-def to_hexa(nums: list[list[int]]) -> None:
+def to_hexa(nums: list[list[int]], entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
     for lst in nums:
         for num in lst:
             print(hex(num)[2:], end="")
         print()
+
+    print()
+    print(f"{entry_row},{entry_column}")
+    print(f"{exit_row},{exit_column}")
+
 
 
 

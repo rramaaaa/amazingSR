@@ -86,7 +86,7 @@ class MazeGenerator:
 
 
     def remove_walls(self) -> list[list[Cell]]:
-        for i in range(len(self.grid)*2):
+        for i in range(len(self.grid) * 5):
             random_row = random.choice(self.grid)
             random_cell = random.choice(random_row)
             if random_cell.cell_direction:
