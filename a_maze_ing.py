@@ -62,6 +62,7 @@ try:
         print("1. Re-generate a new maze")
         print("2. Show/Hide path from entry to exit")
         print("3. Rotate maze colors")
+        print("4. Quit")
 
         while True:
             try:
