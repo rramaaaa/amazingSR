@@ -1,27 +1,75 @@
 import sys
 import os
+import random
 from parsing import read_config, Check_Corners, Ckech_not_in_lock
 from maze import MazeGenerator
 from maze_printer import Maze_Printer
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
+from shortest_path import Finding_shortest_path
 from maze_analyzer import to_hexa, output
 
 
-def menu(input_num: int):
+def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], tf_path: bool, entry: tuple[int, int], ext: tuple[int, int]) -> None:
     if ent == 1:
+        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
         os.system("clear")
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
         Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
         grid = obj.Generate_Maze(grid, perfect)
         grid = FortyTwo_Check(grid, rows, columns)
-        Maze_Printer(grid, rows, columns)
+        Maze_Printer(grid, rows, columns, colors)
         print()
         print("=== A-Maze-ing ===")
         print("1. Re-generate a new maze")
         print("2. Show/Hide path from entry to exit")
         print("3. Rotate maze colors")
         print("4. Quit")
+
+    elif ent == 2:
+        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+
+        if tf_path:
+            path = Finding_shortest_path(maze, entry, ext)
+            Maze_Printer(maze, rows, columns, colors, path)
+
+        else:
+            Maze_Printer(maze, rows, columns, colors)
+
+        print()
+        print("=== A-Maze-ing ===")
+        print("1. Re-generate a new maze")
+        print("2. Show/Hide path from entry to exit")
+        print("3. Rotate maze colors")
+        print("4. Quit")
+
+    elif ent == 3:
+        os.system("clear")
+        all_colors = [
+            ["\033[38;2;243;182;210m", "\033[38;2;181;235;237m"], #Soft Pink and Light Cyan
+            ["\033[38;2;197;179;230m", "\033[38;2;181;235;237m"], #Soft Purple and Light Cyan
+            ["\033[38;2;154;255;155m", "\033[38;2;245;230;168m"], #Mint Green and Soft Yellow
+            ["\033[38;2;181;235;237m", "\033[38;2;243;182;210m"], #Light Cyan and Soft Pink
+            ["\033[38;2;85;191;194m", "\033[38;2;181;235;237m"],  #Teal and Light Cyan
+            ["\033[38;2;141;216;232m", "\033[38;2;245;230;168m"], #Soft Blue and Soft Yellow
+            ["\033[38;2;243;182;210m", "\033[38;2;245;230;168m"]  #Soft Pink and Soft Yellow
+        ]
+
+        colors = random.choice(all_colors)
+        if tf_path:
+            path = Finding_shortest_path(maze, entry, ext)
+            Maze_Printer(maze, rows, columns, colors, path)
+
+        else:
+            Maze_Printer(maze, rows, columns, colors)
+
+        print()
+        print("=== A-Maze-ing ===")
+        print("1. Re-generate a new maze")
+        print("2. Show/Hide path from entry to exit")
+        print("3. Rotate maze colors")
+        print("4. Quit")
+
     elif ent == 4:
         exit()
 
@@ -37,6 +85,8 @@ try:
     entry_row, entry_column = config["ENTRY"].split(",")
     exit_row, exit_column = config["EXIT"].split(",")
     perfect = config["PERFECT"]
+    entry = (int(entry_row), int(entry_column))
+    ext = (int(exit_row), int(exit_column))
     Check_Corners(rows, columns, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
 
     if rows < 12 or columns < 10:
@@ -50,13 +100,14 @@ try:
         raise ValueError("Maze size is too large!\nPlease enter height and width values smaller than 50")
 
     else:
+        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
         obj = MazeGenerator()
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
         Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
         grid = obj.Generate_Maze(grid, perfect)
         grid = FortyTwo_Check(grid, rows, columns)
-        Maze_Printer(grid, rows, columns)
+        Maze_Printer(grid, rows, columns, colors) #Light Cyan and Soft Yellow
         print()
         print("=== A-Maze-ing ===")
         print("1. Re-generate a new maze")
@@ -64,14 +115,20 @@ try:
         print("3. Rotate maze colors")
         print("4. Quit")
 
+        path = False
         while True:
             try:
                 ent = int(input("Choice? (1-4): "))
-                menu(ent)
+                if ent == 3:
+                    if path:
+                        path = False
+                    else:
+                        path = True
+                menu(ent, grid, path, entry, ext)
 
 
             except KeyboardInterrupt as e:
-                raise KeyboardInterrupt("\n")
+                raise KeyboardInterrupt("")
 
 
 except KeyboardInterrupt :
