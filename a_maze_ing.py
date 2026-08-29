@@ -12,6 +12,7 @@ from maze_analyzer import to_hexa, output
 def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], show_path: bool, entry: tuple[int, int], ext: tuple[int, int]) -> None:
     if ent == 1:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+
         os.system("clear")
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
@@ -26,7 +27,10 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], show_path: bool, 
         print("3. Rotate maze colors")
         print("4. Quit")
 
+        return grid
+
     elif ent == 2:
+        os.system("clear")
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
 
         if show_path:
@@ -101,6 +105,7 @@ try:
 
     else:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+
         obj = MazeGenerator()
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
@@ -124,7 +129,10 @@ try:
                         path = False
                     else:
                         path = True
-                menu(ent, grid, path, entry, ext)
+                if ent == 1:
+                    grid = menu(ent, grid, path, entry, ext)
+                else:
+                    menu(ent, grid, path, entry, ext)
 
 
             except KeyboardInterrupt as e:
