@@ -34,7 +34,7 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], show_path: bool, 
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
 
         if show_path:
-            path = Finding_shortest_path(maze, entry, ext)
+            path, _ = Finding_shortest_path(maze, entry, ext)
             Maze_Printer_withPath(maze, rows, columns, entry, ext, colors, path)
 
         else:
@@ -61,7 +61,7 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], show_path: bool, 
 
         colors = random.choice(all_colors)
         if show_path:
-            path = Finding_shortest_path(maze, entry, ext)
+            path, _ = Finding_shortest_path(maze, entry, ext)
             Maze_Printer_withPath(maze, rows, columns, entry, ext, colors, path)
 
         else:
@@ -144,4 +144,7 @@ except KeyboardInterrupt :
 except Exception as e:
         print(e)
 
+
+#res = output(grid)
+#to_hexa(grid, res, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
 #print(file_name)

@@ -6,14 +6,14 @@ def Finding_shortest_path(
     grid: list[list[MazeGenerator.Cell]],
     entry: tuple[int, int],
     exit_point: tuple[int, int]
-) -> list[tuple[int, int]]:
+) -> tuple[list[tuple[int, int]], list[str]]:
 
     height = len(grid)
     width = len(grid[0])
 
     q: deque[tuple[int, int]] = deque()
     visited: set[tuple[int, int]] = set()
-    parent: dict[tuple[int, int], tuple[int, int]] = {}
+    parent: dict[tuple[int, int], tuple[int, int, str]] = {}
 
     visited.add(entry)
     q.append(entry)
@@ -35,7 +35,7 @@ def Finding_shortest_path(
                 and not grid[neighbor[0]][neighbor[1]].Lock
             ):
                 visited.add(neighbor)
-                parent[neighbor] = (row, column)
+                parent[neighbor] = (row, column, "N")
                 q.append(neighbor)
 
         if not current.Left:
@@ -48,7 +48,7 @@ def Finding_shortest_path(
                 and not grid[neighbor[0]][neighbor[1]].Lock
             ):
                 visited.add(neighbor)
-                parent[neighbor] = (row, column)
+                parent[neighbor] = (row, column, "W")
                 q.append(neighbor)
 
         if not current.Bottom:
@@ -61,7 +61,7 @@ def Finding_shortest_path(
                 and not grid[neighbor[0]][neighbor[1]].Lock
             ):
                 visited.add(neighbor)
-                parent[neighbor] = (row, column)
+                parent[neighbor] = (row, column, "S")
                 q.append(neighbor)
 
         if not current.Right:
@@ -74,20 +74,28 @@ def Finding_shortest_path(
                 and not grid[neighbor[0]][neighbor[1]].Lock
             ):
                 visited.add(neighbor)
-                parent[neighbor] = (row, column)
+                parent[neighbor] = (row, column, "E")
                 q.append(neighbor)
 
     if exit_point not in visited:
-        return []
+        return [], []
 
     goal = exit_point
     s_path: list[tuple[int, int]] = []
+    moves: list[str] = []
 
     while goal != entry:
         s_path.append(goal)
-        goal = parent[goal]
+
+        parent_row, parent_column, direction = parent[goal]
+
+        moves.append(direction)
+
+        goal = (parent_row, parent_column)
 
     s_path.append(entry)
-    s_path.reverse()
 
-    return s_path
+    s_path.reverse()
+    moves.reverse()
+
+    return s_path, moves
