@@ -3,13 +3,13 @@ import os
 import random
 from parsing import read_config, Check_Corners, Ckech_not_in_lock
 from maze import MazeGenerator
-from maze_printer import Maze_Printer
+from maze_printer import Maze_Printer, Maze_Printer_withPath
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
 from shortest_path import Finding_shortest_path
 from maze_analyzer import to_hexa, output
 
 
-def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], tf_path: bool, entry: tuple[int, int], ext: tuple[int, int]) -> None:
+def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], show_path: bool, entry: tuple[int, int], ext: tuple[int, int]) -> None:
     if ent == 1:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
         os.system("clear")
@@ -18,7 +18,7 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], tf_path: bool, en
         Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
         grid = obj.Generate_Maze(grid, perfect)
         grid = FortyTwo_Check(grid, rows, columns)
-        Maze_Printer(grid, rows, columns, colors)
+        Maze_Printer(grid, rows, columns, entry, ext, colors)
         print()
         print("=== A-Maze-ing ===")
         print("1. Re-generate a new maze")
@@ -29,12 +29,12 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], tf_path: bool, en
     elif ent == 2:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
 
-        if tf_path:
+        if show_path:
             path = Finding_shortest_path(maze, entry, ext)
-            Maze_Printer(maze, rows, columns, colors, path)
+            Maze_Printer_withPath(maze, rows, columns, entry, ext, colors, path)
 
         else:
-            Maze_Printer(maze, rows, columns, colors)
+            Maze_Printer(maze, rows, columns, entry, ext, colors)
 
         print()
         print("=== A-Maze-ing ===")
@@ -56,12 +56,12 @@ def menu(input_num: int, maze: list[list[MazeGenerator.Cell]], tf_path: bool, en
         ]
 
         colors = random.choice(all_colors)
-        if tf_path:
+        if show_path:
             path = Finding_shortest_path(maze, entry, ext)
-            Maze_Printer(maze, rows, columns, colors, path)
+            Maze_Printer_withPath(maze, rows, columns, entry, ext, colors, path)
 
         else:
-            Maze_Printer(maze, rows, columns, colors)
+            Maze_Printer(maze, rows, columns, entry, ext, colors)
 
         print()
         print("=== A-Maze-ing ===")
@@ -107,7 +107,7 @@ try:
         Ckech_not_in_lock(grid, int(entry_row), int(entry_column), int(exit_row), int(exit_column))
         grid = obj.Generate_Maze(grid, perfect)
         grid = FortyTwo_Check(grid, rows, columns)
-        Maze_Printer(grid, rows, columns, colors) #Light Cyan and Soft Yellow
+        Maze_Printer(grid, rows, columns,entry, ext, colors) #Light Cyan and Soft Yellow
         print()
         print("=== A-Maze-ing ===")
         print("1. Re-generate a new maze")
@@ -119,7 +119,7 @@ try:
         while True:
             try:
                 ent = int(input("Choice? (1-4): "))
-                if ent == 3:
+                if ent == 2:
                     if path:
                         path = False
                     else:
