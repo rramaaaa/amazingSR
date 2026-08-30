@@ -22,7 +22,12 @@ def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
     return result
 
 
-def to_hexa(grid: list[list[MazeGenerator.Cell]], nums: list[list[int]], entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
+def to_hexa(grid: list[list[MazeGenerator.Cell]],
+            nums: list[list[int]],
+            entry_row: int, entry_column: int,
+            exit_row: int, exit_column: int
+            ) -> None:
+
     for lst in nums:
         for num in lst:
             print(hex(num)[2:], end="")
@@ -38,12 +43,3 @@ def to_hexa(grid: list[list[MazeGenerator.Cell]], nums: list[list[int]], entry_r
     for move in moves:
         print(move, end="")
     print()
-
-
-
-
-#obj = MazeGenerator()
-#grid = obj.Create_Grid(10, 10)
-#out = obj.Generate_Maze(grid)
-#res = output(out)
-#to_hexa(res)
