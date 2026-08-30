@@ -1,7 +1,11 @@
 from maze import MazeGenerator
 
 
-def Check_Corners(height: int, width: int, entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
+def Check_Corners(height: int, width: int,
+                  entry_row: int, entry_column: int,
+                  exit_row: int, exit_column: int
+                  ) -> None:
+
     if entry_row < 0 or entry_row >= height:
         raise ValueError("entry row is outside the maze!")
 
@@ -18,13 +22,16 @@ def Check_Corners(height: int, width: int, entry_row: int, entry_column: int, ex
         raise ValueError("entry and exit point can't be the same!")
 
 
-def Ckech_not_in_lock(grid: list[list[MazeGenerator.Cell]], entry_row: int, entry_column: int, exit_row: int, exit_column: int) -> None:
+def Ckech_not_in_lock(grid: list[list[MazeGenerator.Cell]],
+                      entry_row: int, entry_column: int,
+                      exit_row: int, exit_column: int
+                      ) -> None:
     if grid[entry_row][entry_column].Lock:
         raise ValueError("The entry point is placed on the locked 42 point")
 
     if grid[exit_row][exit_column].Lock:
         raise ValueError("The exit point is placed on the locked 42 point")
-    
+
 
 def read_config(file_name: str) -> dict[str, str]:
     with open(file_name, 'r') as file:
@@ -36,7 +43,9 @@ def read_config(file_name: str) -> dict[str, str]:
                 line = line.strip()
                 parts = line.split("=")
                 if len(parts) != 2:
-                    raise ValueError("please enter a correct format! '(KEY=VAlUE)'")
+                    raise ValueError(
+                        "please enter a correct format! '(KEY=VAlUE)'"
+                        )
                 key, value = parts
                 info[key] = value
 
@@ -57,9 +66,7 @@ def read_config(file_name: str) -> dict[str, str]:
 
         if "PERFECT" not in info:
             raise KeyError("Config file must have a PERFECT status")
-        
+
     return info
 
-#print(read_config("config.txt"))
-
-
+# print(read_config("config.txt"))

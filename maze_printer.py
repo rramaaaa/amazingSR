@@ -26,15 +26,15 @@ def Maze_Printer(grid: list[list["MazeGenerator.Cell"]], rows: int, columns: int
                     print(forty_color + "████", end="")
                 elif (i, column) == entry:
                         if grid[i][column].Right:
-                            print(entry_color + " ██" + walls_color + "█", end="")
+                            print(entry_color + " 🚩" + walls_color + "█", end="")
                         else:
-                            print(entry_color + " ██ ", end="")
+                            print(entry_color + " 🚩 ", end="")
 
                 elif (i, column) == ext:
                     if grid[i][column].Right:
-                        print(exit_color + " ██" + walls_color + "█", end="")
+                        print(exit_color + " 🏳️ " + walls_color + "█", end="")
                     else:
-                        print(exit_color + " ██ ", end="")
+                        print(exit_color + "  🏳️ ", end="")
 
                 elif grid[i][column].Right:
                     print(walls_color + "   █", end="")
@@ -85,21 +85,21 @@ def Maze_Printer_withPath(grid: list[list[MazeGenerator.Cell]],
                     print(forty_color + "████", end="")
                 elif (i, column) == entry:
                     if grid[i][column].Right:
-                        print(entry_color + " ██" + wall_color + "█", end="")
+                        print(entry_color + " 🚩" + wall_color + "█", end="")
                     else:
-                        print(entry_color + " ██ ", end="")
+                        print(entry_color + " 🚩 ", end="")
 
                 elif (i, column) == ext:
                     if grid[i][column].Right:
-                        print(exit_color + " ██" + wall_color + "█", end="")
+                        print(exit_color + " 🏳️ " + wall_color + "█", end="")
                     else:
-                        print(exit_color + " ██ ", end="")
+                        print(exit_color + " 🏳️  ", end="")
 
                 elif (i, column) in path:
                     if grid[i][column].Right:
-                        print(path_color + " ██" + wall_color + "█", end="")
+                        print(path_color + " 🤨" + wall_color + "█", end="")
                     else:
-                        print(path_color + " ██ ", end="")
+                        print(path_color + " 🤨 ", end="")
                         
                 elif grid[i][column].Right:
                     print(wall_color + "   █", end="")
