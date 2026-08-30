@@ -13,7 +13,7 @@ def menu(input_num: int,
          maze: list[list[MazeGenerator.Cell]],
          show_path: bool, entry: tuple[int, int],
          ext: tuple[int, int]
-         ) -> None:
+         ) -> list[list[MazeGenerator.Cell]]:
 
     if ent == 1:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
@@ -80,6 +80,7 @@ def menu(input_num: int,
                                   entry, ext,
                                   colors, path)
 
+
         else:
             Maze_Printer(maze, rows, columns, entry, ext, colors)
 
@@ -96,10 +97,17 @@ def menu(input_num: int,
     else:
         print("Please choice number (1-4)!")
 
+    # return grid
+
 
 try:
     file_name = sys.argv[1]
     config = read_config(file_name)
+    if "seed" in config:
+        seed = int(config["seed"])
+    else:
+        seed = None
+
     columns = int(config["WIDTH"])
     rows = int(config["HEIGHT"])
     entry_row, entry_column = config["ENTRY"].split(",")
@@ -113,11 +121,13 @@ try:
                   )
 
     if rows < 12 or columns < 10:
+        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+
         print("Maze size is too small")
         obj = MazeGenerator()
         grid = obj.Create_Grid(rows, columns)
         grid = obj.Generate_Maze(grid, perfect)
-        Maze_Printer(grid)
+        Maze_Printer(grid, rows, columns, entry, ext, colors)
 
     elif rows > 50 or columns > 50:
         raise ValueError(
