@@ -15,7 +15,9 @@ def menu(input_num: int, config: dict[str, str],
          ext: tuple[int, int], seed: int | None = None
          ) -> list[list[MazeGenerator.Cell]]:
 
-    if ent == 1:
+    '''handle the user's choice'''
+
+    if input_num == 1:
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
 
         os.system("clear")
@@ -38,7 +40,7 @@ def menu(input_num: int, config: dict[str, str],
 
         return grid
 
-    elif ent == 2:
+    elif input_num == 2:
         os.system("clear")
         colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
 
@@ -60,7 +62,7 @@ def menu(input_num: int, config: dict[str, str],
         print("3. Rotate maze colors")
         print("4. Quit")
 
-    elif ent == 3:
+    elif input_num == 3:
         os.system("clear")
         all_colors = [
             ["\033[38;2;243;182;210m", "\033[38;2;181;235;237m"],
@@ -90,7 +92,7 @@ def menu(input_num: int, config: dict[str, str],
         print("3. Rotate maze colors")
         print("4. Quit")
 
-    elif ent == 4:
+    elif input_num == 4:
         Output_Maze(maze, config["output_file"], entry, ext)
         exit()
 
@@ -149,7 +151,7 @@ try:
         grid = FortyTwo_Check(grid, rows, columns)
         Maze_Printer(grid,
                      rows, columns,
-                     entry, ext, colors)  # Light Cyan and Soft Yellow
+                     entry, ext, colors)
         print()
         print("=== A-Maze-ing ===")
         print("1. Re-generate a new maze")

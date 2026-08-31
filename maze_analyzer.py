@@ -3,6 +3,9 @@ from shortest_path import Finding_shortest_path
 
 
 def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
+
+    '''Convert maze walls into numeric values'''
+
     result = []
     for row in grid:
         res_row = []
@@ -26,6 +29,8 @@ def Output_Maze(grid: list[list[MazeGenerator.Cell]],
                 file_name: str,
                 entry: tuple[int, int], ext: tuple[int, int]
                 ) -> None:
+
+    '''Generate the maze output file'''
     result = output(grid)
     with open(file_name, "w") as f:
         for row in result:

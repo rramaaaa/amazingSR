@@ -6,6 +6,8 @@ def FortyTwo_Check(
         rows: int, columns: int
         ) -> list[list[MazeGenerator.Cell]]:
 
+    '''Check the 42 lock walls'''
+
     i: int = rows // 2
     j: int = columns // 2
 
@@ -148,6 +150,8 @@ def FortyTwo_Lock(
         grid: list[list[MazeGenerator.Cell]],
         rows: int, columns: int
         ) -> list[list[MazeGenerator.Cell]]:
+
+    '''Create the 42 lock pattern in the maze'''
 
     i: int = rows // 2
     j: int = columns // 2
