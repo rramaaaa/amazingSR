@@ -7,6 +7,8 @@ def Maze_Printer(
         ext: tuple[int, int], colors: list[str]
         ) -> None:
 
+    '''Print maze without path'''
+
     walls_color = colors[0]
     forty_color = colors[1]
     entry_color = "\033[38;2;210;170;120m"
@@ -64,6 +66,8 @@ def Maze_Printer_withPath(grid: list[list[MazeGenerator.Cell]],
                           path: list[tuple[int, int]]
                           ) -> None:
 
+    '''Print Maze with path'''
+    
     wall_color = colors[0]
     forty_color = colors[1]
     path_color = "\033[38;2;150;50;70m"  # maroon

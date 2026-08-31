@@ -6,6 +6,8 @@ def Check_Corners(height: int, width: int,
                   exit_row: int, exit_column: int
                   ) -> None:
 
+    '''Check that the entry and exit are inside the maze'''
+
     if entry_row < 0 or entry_row >= height:
         raise ValueError("entry row is outside the maze!")
 
@@ -26,6 +28,9 @@ def Check_not_in_lock(grid: list[list[MazeGenerator.Cell]],
                       entry_row: int, entry_column: int,
                       exit_row: int, exit_column: int
                       ) -> None:
+
+    '''Check that the entry and exit are not inside the 42 lock'''
+
     if grid[entry_row][entry_column].Lock:
         raise ValueError("The entry point is placed on the locked 42 point")
 
