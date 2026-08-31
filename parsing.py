@@ -39,6 +39,9 @@ def Check_not_in_lock(grid: list[list[MazeGenerator.Cell]],
 
 
 def read_config(file_name: str) -> dict[str, str]:
+
+    '''Read and validate the maze configuration file'''
+
     with open(file_name, 'r') as file:
         info = {}
         for line in file:
@@ -73,5 +76,3 @@ def read_config(file_name: str) -> dict[str, str]:
             raise KeyError("Config file must have a PERFECT status")
 
     return info
-
-# print(read_config("config.txt"))

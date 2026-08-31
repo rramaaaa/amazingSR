@@ -8,6 +8,8 @@ def Finding_shortest_path(
     exit_point: tuple[int, int]
 ) -> tuple[list[tuple[int, int]], list[str]]:
 
+    '''finding the shortest path through the maze'''
+
     height = len(grid)
     width = len(grid[0])
 
