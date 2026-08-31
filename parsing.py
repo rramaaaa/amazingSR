@@ -22,7 +22,7 @@ def Check_Corners(height: int, width: int,
         raise ValueError("entry and exit point can't be the same!")
 
 
-def Ckech_not_in_lock(grid: list[list[MazeGenerator.Cell]],
+def Check_not_in_lock(grid: list[list[MazeGenerator.Cell]],
                       entry_row: int, entry_column: int,
                       exit_row: int, exit_column: int
                       ) -> None:
@@ -47,24 +47,24 @@ def read_config(file_name: str) -> dict[str, str]:
                         "please enter a correct format! '(KEY=VAlUE)'"
                         )
                 key, value = parts
-                info[key] = value
+                info[key.lower()] = value.lower()
 
-        if "WIDTH" not in info:
+        if "width" not in info:
             raise KeyError("config file must have a WIDTH")
 
-        if "HEIGHT" not in info:
+        if "height" not in info:
             raise KeyError("Config file must have a HEIGHT")
 
-        if "ENTRY" not in info:
+        if "entry" not in info:
             raise KeyError("Config file must have an ENTRY point")
 
-        if "EXIT" not in info:
+        if "exit" not in info:
             raise KeyError("Config file must have an EXIT point")
 
-        if "OUTPUT_FILE" not in info:
+        if "output_file" not in info:
             raise KeyError("Config file must have an OUTPUT FILE")
 
-        if "PERFECT" not in info:
+        if "perfect" not in info:
             raise KeyError("Config file must have a PERFECT status")
 
     return info

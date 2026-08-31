@@ -22,24 +22,26 @@ def output(grid: list[list[MazeGenerator.Cell]]) -> list[list[int]]:
     return result
 
 
-def to_hexa(grid: list[list[MazeGenerator.Cell]],
-            nums: list[list[int]],
-            entry_row: int, entry_column: int,
-            exit_row: int, exit_column: int
-            ) -> None:
+def Output_Maze(grid: list[list[MazeGenerator.Cell]],
+                file_name: str,
+                entry: tuple[int, int], ext: tuple[int, int]
+                ) -> None:
+    result = output(grid)
+    with open(file_name, "w") as f:
+        for row in result:
+            for num in row:
+                f.write(hex(num)[2:])
+            f.write("\n")
 
-    for lst in nums:
-        for num in lst:
-            print(hex(num)[2:], end="")
-        print()
+        entry_row, entry_column = entry
+        exit_row, exit_column = ext
+        f.write("\n")
+        f.write(f"{entry_row},{entry_column}")
+        f.write("\n")
+        f.write(f"{exit_row},{exit_column}")
+        f.write("\n")
 
-    print()
-    print(f"{entry_row},{entry_column}")
-    print(f"{exit_row},{exit_column}")
-
-    entry = (entry_row, entry_column)
-    ext = (exit_row, exit_column)
-    _, moves = Finding_shortest_path(grid, entry, ext)
-    for move in moves:
-        print(move, end="")
-    print()
+        _, moves = Finding_shortest_path(grid, entry, ext)
+        for move in moves:
+            f.write(move)
+        f.write("\n")

@@ -1,18 +1,18 @@
 import sys
 import os
 import random
-from parsing import read_config, Check_Corners, Ckech_not_in_lock
+from parsing import read_config, Check_Corners, Check_not_in_lock
 from maze import MazeGenerator
 from maze_printer import Maze_Printer, Maze_Printer_withPath
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
 from shortest_path import Finding_shortest_path
-# from maze_analyzer import to_hexa, output
+from maze_analyzer import Output_Maze
 
 
-def menu(input_num: int,
+def menu(input_num: int, config: dict[str, str],
          maze: list[list[MazeGenerator.Cell]],
          show_path: bool, entry: tuple[int, int],
-         ext: tuple[int, int]
+         ext: tuple[int, int], seed: int | None = None
          ) -> list[list[MazeGenerator.Cell]]:
 
     if ent == 1:
@@ -21,12 +21,12 @@ def menu(input_num: int,
         os.system("clear")
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
-        Ckech_not_in_lock(
+        Check_not_in_lock(
             grid,
             int(entry_row), int(entry_column),
             int(exit_row), int(exit_column)
             )
-        grid = obj.Generate_Maze(grid, perfect)
+        grid = obj.Generate_Maze(grid, perfect, seed)
         grid = FortyTwo_Check(grid, rows, columns)
         Maze_Printer(grid, rows, columns, entry, ext, colors)
         print()
@@ -80,7 +80,6 @@ def menu(input_num: int,
                                   entry, ext,
                                   colors, path)
 
-
         else:
             Maze_Printer(maze, rows, columns, entry, ext, colors)
 
@@ -92,27 +91,28 @@ def menu(input_num: int,
         print("4. Quit")
 
     elif ent == 4:
+        Output_Maze(maze, config["output_file"], entry, ext)
         exit()
 
     else:
         print("Please choice number (1-4)!")
 
-    # return grid
+    return maze
 
 
 try:
     file_name = sys.argv[1]
     config = read_config(file_name)
+
     if "seed" in config:
         seed = int(config["seed"])
-    else:
-        seed = None
 
-    columns = int(config["WIDTH"])
-    rows = int(config["HEIGHT"])
-    entry_row, entry_column = config["ENTRY"].split(",")
-    exit_row, exit_column = config["EXIT"].split(",")
-    perfect = config["PERFECT"]
+    columns = int(config["width"])
+    rows = int(config["height"])
+    entry_row, entry_column = config["entry"].split(",")
+    exit_row, exit_column = config["exit"].split(",")
+    perfect = config["perfect"]
+    output_file = ["output_file"]
     entry = (int(entry_row), int(entry_column))
     ext = (int(exit_row), int(exit_column))
     Check_Corners(rows, columns,
@@ -126,7 +126,7 @@ try:
         print("Maze size is too small")
         obj = MazeGenerator()
         grid = obj.Create_Grid(rows, columns)
-        grid = obj.Generate_Maze(grid, perfect)
+        grid = obj.Generate_Maze(grid, perfect, seed)
         Maze_Printer(grid, rows, columns, entry, ext, colors)
 
     elif rows > 50 or columns > 50:
@@ -141,11 +141,11 @@ try:
         obj = MazeGenerator()
         grid = obj.Create_Grid(rows, columns)
         grid = FortyTwo_Lock(grid, rows, columns)
-        Ckech_not_in_lock(grid,
+        Check_not_in_lock(grid,
                           int(entry_row), int(entry_column),
                           int(exit_row), int(exit_column)
                           )
-        grid = obj.Generate_Maze(grid, perfect)
+        grid = obj.Generate_Maze(grid, perfect, seed)
         grid = FortyTwo_Check(grid, rows, columns)
         Maze_Printer(grid,
                      rows, columns,
@@ -167,22 +167,16 @@ try:
                     else:
                         path = True
                 if ent == 1:
-                    grid = menu(ent, grid, path, entry, ext)
+                    grid = menu(ent, config, grid, path, entry, ext)
                 else:
-                    menu(ent, grid, path, entry, ext)
+                    menu(ent, config, grid, path, entry, ext)
 
             except KeyboardInterrupt:
                 raise KeyboardInterrupt("")
 
+    Output_Maze(grid, config["output_file"], entry, ext)
 
 except KeyboardInterrupt:
     print("\nQuitting the program")
 except Exception as e:
     print(e)
-
-
-# res = output(grid)
-# to_hexa(grid, res,
-#        int(entry_row), int(entry_column),
-#        int(exit_row), int(exit_column))
-# print(file_name)

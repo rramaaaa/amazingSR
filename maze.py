@@ -124,7 +124,10 @@ class MazeGenerator:
 
     def Generate_Maze(
             self, grid: list[list[Cell]],
-            perfect: str) -> list[list[Cell]]:
+            perfect: str, seed: int | None) -> list[list[Cell]]:
+
+        if seed:
+            random.seed(seed)
         cells = []
         moves = []
         visited = []
