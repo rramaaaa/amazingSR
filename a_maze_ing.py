@@ -6,7 +6,7 @@ from maze import MazeGenerator
 from maze_printer import Maze_Printer, Maze_Printer_withPath
 from fortytwo_lock import FortyTwo_Lock, FortyTwo_Check
 from shortest_path import Finding_shortest_path
-from maze_analyzer import Output_Maze
+from hexa_output import Output_Maze
 
 
 def menu(input_num: int, config: dict[str, str],
@@ -22,7 +22,8 @@ def menu(input_num: int, config: dict[str, str],
     exit_row, exit_column = ext
 
     if input_num == 1:
-        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+        # colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+        colors = ["\033[38;2;255;0;0m", "\033[38;2;255;255;255m"]
 
         os.system("clear")
         obj = MazeGenerator()
@@ -47,7 +48,8 @@ def menu(input_num: int, config: dict[str, str],
 
     elif input_num == 2:
         os.system("clear")
-        colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+        # colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+        colors = ["\033[38;2;255;0;0m", "\033[38;2;255;255;255m"]
 
         if show_path:
             path, _ = Finding_shortest_path(maze, entry, ext)
@@ -76,7 +78,8 @@ def menu(input_num: int, config: dict[str, str],
             ["\033[38;2;181;235;237m", "\033[38;2;243;182;210m"],
             ["\033[38;2;85;191;194m", "\033[38;2;181;235;237m"],
             ["\033[38;2;141;216;232m", "\033[38;2;245;230;168m"],
-            ["\033[38;2;243;182;210m", "\033[38;2;245;230;168m"]
+            ["\033[38;2;243;182;210m", "\033[38;2;245;230;168m"],
+            ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
         ]
 
         colors = random.choice(all_colors)
@@ -107,7 +110,7 @@ def menu(input_num: int, config: dict[str, str],
     return maze
 
 
-def main():
+def main() -> None:
     try:
         file_name = sys.argv[1]
         config = read_config(file_name)
@@ -120,16 +123,16 @@ def main():
         entry_row, entry_column = config["entry"].split(",")
         exit_row, exit_column = config["exit"].split(",")
         perfect = config["perfect"]
-        output_file = ["output_file"]
         entry = (int(entry_row), int(entry_column))
         ext = (int(exit_row), int(exit_column))
         Check_Corners(rows, columns,
-                    int(entry_row), int(entry_column),
-                    int(exit_row), int(exit_column)
-                    )
+                      int(entry_row), int(entry_column),
+                      int(exit_row), int(exit_column)
+                      )
 
         if rows < 12 or columns < 10:
-            colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+            # colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+            colors = ["\033[38;2;255;0;0m", "\033[38;2;255;255;255m"]
 
             print("Maze size is too small")
             obj = MazeGenerator()
@@ -144,20 +147,21 @@ def main():
                 )
 
         else:
-            colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+            # colors = ["\033[38;2;181;235;237m", "\033[38;2;245;230;168m"]
+            colors = ["\033[38;2;255;0;0m", "\033[38;2;255;255;255m"]
 
             obj = MazeGenerator()
             grid = obj.Create_Grid(rows, columns)
             grid = FortyTwo_Lock(grid, rows, columns)
             Check_not_in_lock(grid,
-                            int(entry_row), int(entry_column),
-                            int(exit_row), int(exit_column)
-                            )
+                              int(entry_row), int(entry_column),
+                              int(exit_row), int(exit_column)
+                              )
             grid = obj.Generate_Maze(grid, perfect, seed)
             grid = FortyTwo_Check(grid, rows, columns)
             Maze_Printer(grid,
-                        rows, columns,
-                        entry, ext, colors)
+                         rows, columns,
+                         entry, ext, colors)
             print()
             print("=== A-Maze-ing ===")
             print("1. Re-generate a new maze")
@@ -168,16 +172,29 @@ def main():
             path = False
             while True:
                 try:
-                    ent = int(input("Choice? (1-4): "))
+                    try:
+                        ent = int(input("Choice? (1-4): "))
+                    except ValueError:
+                        raise ValueError("Please enter a number")
                     if ent == 2:
                         if path:
                             path = False
                         else:
                             path = True
                     if ent == 1:
-                        grid = menu(ent, config, rows, columns, grid, path, entry, ext)
+                        grid = menu(
+                            ent, config,
+                            rows, columns,
+                            grid, path,
+                            entry, ext
+                            )
                     else:
-                        menu(ent, config, rows, columns, grid, path, entry, ext)
+                        menu(
+                            ent, config,
+                            rows, columns,
+                            grid, path,
+                            entry, ext
+                            )
 
                 except KeyboardInterrupt:
                     raise KeyboardInterrupt("")
@@ -188,5 +205,6 @@ def main():
         print("\nQuitting the program")
     except Exception as e:
         print(e)
+
 
 main()

@@ -11,8 +11,8 @@ def Maze_Printer(
 
     walls_color = colors[0]
     forty_color = colors[1]
-    entry_color = "\033[38;2;210;170;120m"
-    exit_color = "\033[38;2;20;50;100m"
+    entry_color = "\033[38;2;255;255;255m"
+    exit_color = "\033[38;2;255;255;255m"
 
     for i in range(columns):
         print(walls_color + "████", end="")
@@ -67,12 +67,12 @@ def Maze_Printer_withPath(grid: list[list[MazeGenerator.Cell]],
                           ) -> None:
 
     '''Print Maze with path'''
-    
+
     wall_color = colors[0]
     forty_color = colors[1]
-    path_color = "\033[38;2;150;50;70m"  # maroon
-    entry_color = "\033[38;2;210;170;120m"  # brown
-    exit_color = "\033[38;2;20;50;100m"  # blue
+    path_color = "\033[38;2;255;255;255m"
+    entry_color = "\033[38;2;255;255;255m"
+    exit_color = "\033[38;2;255;255;255m"
 
     for i in range(columns):
         print(wall_color + "████", end="")
