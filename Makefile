@@ -12,7 +12,7 @@ debug:
 
 clean:
 	rm -rf __pycache__
-	rm -rf .mypy_chache
+	rm -rf .mypy_cache
 
 lint:
 	flake8 .
@@ -30,7 +30,7 @@ lint-strict:
 fclean:
 	$(PYTHON) $(MAIN) $(CONFIG)
 	rm -rf __pycache__
-	rm -rf .mypy_chache
+	rm -rf .mypy_cache
 
 install:
 	$(PYTHON) -m build
