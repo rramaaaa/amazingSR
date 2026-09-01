@@ -54,12 +54,63 @@ mazegen config.txt (if you had been installed the **mazgen** before)
 ```bash
 fclean
 ```
-
 - Removes object files using:
 ``` bash
 clean
 ```
-- To check the flake8 and 
+- To check the flake8 and srtict mypy:
+``` bash
+make lint-strict
+```
+
+- To check the flake8 and normal mypy with some specific constraints
+``` bash
+make lint
+```
+
+# Congig file
+
+The config file must have 6 Keys(required)
+HEIGHT = the number of rows of the maze,
+WIDTH = the number of columns of the maze,
+
+ENTRY = a user chosen point as a tuple to start entering the maze such as (0,0),
+
+EXIT = a user chosen point as a tuple to exit the maze such as (19,14),
+
+OUTPUT_FILE = a text file that shows the path directions such as SEWN(south, east, weast, north) and a maze walls in hexa-decimal
+
+PERFECT = True(having exactly one path) or PERFECT = False(having more than one path) and SEED = number to make the maze constant(optional).
+
+# Configuration validation
+Before generating the maze, the program checks that:
+
+   - All required parameters are present.
+   - Numeric values are valid.
+   - The maze dimensions are within the allowed limits.
+   - The entrance coordinates are valid.
+   - The exit coordinates are valid.
+   - The configuration does not contain invalid or contradictory values.
+
+Invalid input is handled with an error message rather than allowing the program to continue with incorrect data.
+
+# Algorthims used
+**Depth-First Search with backtracking**
+ The algorithm starts from a cell and explores an unvisited neighboring cell. When moving to a neighboring cell, the wall between the two cells is removed. The algorithm continues until there are no unvisited neighbors, at which point it backtracks to a previous cell and continues exploring from there.
 
 
+## Maze Solving
+
+After generating the maze, the program finds a path from the entrance to the exit.
+
+The solver checks neighboring cells and determines whether movement between them is possible. It keeps track of visited cells to avoid infinite loops and reconstructs the path once the exit is reached.
+
+**Bridth-First Search**
+To find a path from the entrance to the exit.
+
+BFS explores the maze level by level using a queue. Each visited cell stores its previous cell, allowing us to reconstruct the path once the exit is reached.
+
+Because all movements have the same cost, BFS guarantees the shortest path between the entrance and exit.
+
+The resulting path is then displayed using the format required by the project.
 # Resources

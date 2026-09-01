@@ -117,6 +117,8 @@ def main() -> None:
 
         if "seed" in config:
             seed = int(config["seed"])
+        else:
+            seed = None
 
         columns = int(config["width"])
         rows = int(config["height"])

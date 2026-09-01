@@ -66,7 +66,7 @@ def FortyTwo_Check(
     grid[i - 1][j + 1].Bottom = True
     grid[i][j + 1].Bottom = True
     grid[i + 1][j + 1].Top = True
-    grid[i][j].Left = True
+    grid[i][j].Right = True
     # grid[i][j + 1].Right = True
     grid[i][j + 1].Right = True
     grid[i][j + 2].Left = True
@@ -142,6 +142,7 @@ def FortyTwo_Check(
     grid[i + 3][j + 3].Top = True
     grid[i + 2][j + 3].Right = True
     grid[i + 2][j + 4].Left = True
+
 
     return grid
 
