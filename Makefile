@@ -2,7 +2,7 @@ PYTHON = python3
 MAIN = a_maze_ing.py
 CONFIG = config.txt
 
-.PHONY: run debug clean lint lint-strict
+.PHONY: run debug clean lint lint-strict install
 
 run:
 	$(PYTHON) $(MAIN) $(CONFIG)
@@ -12,6 +12,7 @@ debug:
 
 clean:
 	rm -rf __pycache__
+	rm -rf .mypy_chache
 
 lint:
 	flake8 .
@@ -29,3 +30,7 @@ lint-strict:
 fclean:
 	$(PYTHON) $(MAIN) $(CONFIG)
 	rm -rf __pycache__
+	rm -rf .mypy_chache
+
+install:
+	$(PYTHON) -m build

@@ -1,0 +1,15 @@
+[project]
+name = "mazegen"
+version = "1.0.0"
+description = "a maze with an entry and exit to find a path"
+authors = [{name = "sal-qur"}, {name = "rajarada"}]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+mazegen = "a_maze_ing:main"
+
+[tool.hatch.build.targets.wheel]
+include = ["*.py"]
