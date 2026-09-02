@@ -113,4 +113,46 @@ BFS explores the maze level by level using a queue. Each visited cell stores its
 Because all movements have the same cost, BFS guarantees the shortest path between the entrance and exit.
 
 The resulting path is then displayed using the format required by the project.
+
+
 # Resources
+
+- https://www.geeksforgeeks.org/python/deque-in-python/ (for DEQUE)
+- https://en.wikipedia.org/wiki/Breadth-first_search (for BFS)
+- https://youtu.be/pcKY4hjDrxk?si=FAHMuWTTO02PuoRB (for DFS and BFS)
+- https://en.wikipedia.org/wiki/Depth-first_search (for DFS)
+- https://packaging.python.org/en/latest/guides/writing-pyproject-toml/ (for pyproject.toml )
+
+
+## AI usage
+
+AI had been used only to understand the maze shape and for Algorthims resources suggestions, everything else was done by the team members from scratch to the final maze state.
+
+# Team and Project management
+### Team Roles
+
+We worked as a team and divided the project into different responsibilities. Each team member was responsible for a specific part of the project, allowing us to work in parallel and maintain clear ownership of tasks.
+
+- Maze generation and algorithm implementation by rajarada and sal-qur.
+- Maze solving algorithms and pathfinding by sal-qur.
+- Parsing, validation, and configuration handling by rajarada.
+- Output generation, testing, Makefile, and documentation by rajarada and sal-qur.
+### What Worked Well
+
+- Clear division of responsibilities.
+- Frequent communication between team members.
+- Early integration of individual components.
+- Collaborative debugging and testing.
+
+### What Could Be Improved
+
+- More detailed planning at the beginning of the project.
+- Earlier integration testing to identify compatibility issues sooner.
+- Better documentation of design decisions throughout development.
+
+# LICENSE
+
+This project is released under the MIT License.
+You may use, modify, and distribute this project freely, provided that the original copyright notice and license are included.
+
+See LICENSE.md for the full license text.
