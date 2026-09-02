@@ -143,7 +143,6 @@ def FortyTwo_Check(
     grid[i + 2][j + 3].Right = True
     grid[i + 2][j + 4].Left = True
 
-
     return grid
 
 
