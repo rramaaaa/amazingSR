@@ -131,31 +131,27 @@ class MazeGenerator:
 
         for row in self.grid:
             for cell in row:
-
                 tot_walls = self.How_Many_walls(cell)
-
                 if tot_walls != 3 or cell.Lock:
                     continue
 
-                possible_walls = []
-
+                walls = []
                 if cell.Row > 0 and cell.Top:
-                    possible_walls.append("Top")
+                    walls.append("Top")
 
                 if cell.Row < rows - 1 and cell.Bottom:
-                    possible_walls.append("Bottom")
+                    walls.append("Bottom")
 
                 if cell.Column > 0 and cell.Left:
-                    possible_walls.append("Left")
+                    walls.append("Left")
 
                 if cell.Column < columns - 1 and cell.Right:
-                    possible_walls.append("Right")
+                    walls.append("Right")
 
-                if not possible_walls:
+                if not walls:
                     continue
 
-                random_wall = random.choice(possible_walls)
-
+                random_wall = random.choice(walls)
                 if random_wall == "Top":
                     cell.Top = False
                     self.grid[cell.Row - 1][cell.Column].Bottom = False
