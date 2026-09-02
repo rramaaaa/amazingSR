@@ -107,36 +107,70 @@ class MazeGenerator:
 
         return current_cell, move
 
+
+    def How_Many_walls(self, cell: Cell) -> int:
+        tot = 0
+        if cell.Top:
+            tot += 1
+        if cell.Bottom:
+            tot += 1
+        if cell.Right:
+            tot += 1
+        if cell.Left:
+            tot += 1
+
+        return tot
+
+
     def remove_walls(self) -> list[list[Cell]]:
 
         '''Open random walls to make the maze imperfect'''
 
-        for i in range(len(self.grid) * 5):
-            rand_row = random.choice(self.grid)
-            rand_c = random.choice(rand_row)
-            if rand_c.cell_direction:
-                random_wall = random.choice(rand_c.cell_direction)
+        rows = len(self.grid)
+        columns = len(self.grid[0])
+
+        for row in self.grid:
+            for cell in row:
+
+                tot_walls = self.How_Many_walls(cell)
+
+                if tot_walls != 3 or cell.Lock:
+                    continue
+
+                possible_walls = []
+
+                if cell.Row > 0 and cell.Top:
+                    possible_walls.append("Top")
+
+                if cell.Row < rows - 1 and cell.Bottom:
+                    possible_walls.append("Bottom")
+
+                if cell.Column > 0 and cell.Left:
+                    possible_walls.append("Left")
+
+                if cell.Column < columns - 1 and cell.Right:
+                    possible_walls.append("Right")
+
+                if not possible_walls:
+                    continue
+
+                random_wall = random.choice(possible_walls)
+
                 if random_wall == "Top":
-                    rand_c.Top = False
-                    rand_c.cell_direction.remove("Top")
-                    neighbor = self.grid[rand_c.Row - 1][rand_c.Column]
-                    neighbor.Bottom = False
+                    cell.Top = False
+                    self.grid[cell.Row - 1][cell.Column].Bottom = False
 
-                if random_wall == "Bottom":
-                    rand_c.Bottom = False
-                    rand_c.cell_direction.remove("Bottom")
-                    neighbor = self.grid[rand_c.Row + 1][rand_c.Column]
-                    neighbor.Top = False
+                elif random_wall == "Bottom":
+                    cell.Bottom = False
+                    self.grid[cell.Row + 1][cell.Column].Top = False
 
-                if random_wall == "Left":
-                    rand_c.Left = False
-                    rand_c.cell_direction.remove("Left")
-                    self.grid[rand_c.Row][rand_c.Column - 1].Right = False
+                elif random_wall == "Left":
+                    cell.Left = False
+                    self.grid[cell.Row][cell.Column - 1].Right = False
 
-                if random_wall == "Right":
-                    rand_c.Right = False
-                    rand_c.cell_direction.remove("Right")
-                    self.grid[rand_c.Row][rand_c.Column + 1].Left = False
+                elif random_wall == "Right":
+                    cell.Right = False
+                    self.grid[cell.Row][cell.Column + 1].Left = False
 
         return self.grid
 
@@ -206,7 +240,7 @@ class MazeGenerator:
                         point = self.backward(grid, point, next_direction)
                         moves.pop()
 
-        if perfect == "True":
+        if perfect:
             return grid
 
         grid = self.remove_walls()
